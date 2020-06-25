@@ -7,16 +7,19 @@ _onCameraPersionRequest(
     print('status: ' + value.toString());
     if (value.isUndetermined) {
       Permission.camera.request().then((value) {
-        if (value.isDenied) {
-          if (onJustDeny != null) onJustDeny();
-        } else if (value.isGranted) {
-          if (onGranted != null) onGranted();
-        } else if (value.isPermanentlyDenied) {
-          if (onAndroidPermanentDenied != null) onAndroidPermanentDenied();
+        if (value.isDenied && onJustDeny != null) {
+          onJustDeny();
+        } else if (value.isGranted && onGranted != null) {
+          onGranted();
+        } else if (value.isPermanentlyDenied &&
+            onAndroidPermanentDenied != null) {
+          onAndroidPermanentDenied();
         }
       });
-    } else if (value.isDenied) {
-      if (onAlreadyDenied != null) onAlreadyDenied();
+    } else if (value.isDenied && onAlreadyDenied != null) {
+      onAlreadyDenied();
+    } else if (value.isGranted && onGranted != null) {
+      onGranted();
     }
   });
 }
