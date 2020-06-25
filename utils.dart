@@ -21,14 +21,14 @@ _onCameraPersionRequest(
   });
 }
 
-showWarningDialog(BuildContext context, String content, String btnText,
+_showWarningDialog(BuildContext context, String content, String btnText,
     {String title}) {
   Widget alert;
 
-  Widget _titleWidget = title != null
+  Widget _titleWidget({TextAlign textAlign = TextAlign.start}) => title != null
       ? Text(
           title,
-          textAlign: TextAlign.start,
+          textAlign: textAlign,
         )
       : null;
 
@@ -36,7 +36,7 @@ showWarningDialog(BuildContext context, String content, String btnText,
     // If it has plenty of buttons, it will stack them on vertical way.
     // If title isn't supplied, height of this alert will smaller than the one has title.
     alert = AlertDialog(
-      title: _titleWidget,
+      title: _titleWidget(),
       content: Text(
         content,
         textAlign: TextAlign.start,
@@ -51,9 +51,15 @@ showWarningDialog(BuildContext context, String content, String btnText,
       ],
     );
   } else {
+    // Almost similiar with Cupertino style.
     // If title isn't supplied, height of this alert will smaller than the one has title.
     alert = CupertinoAlertDialog(
-      title: _titleWidget,
+      title: Padding(
+        padding: EdgeInsets.only(
+          bottom: 10,
+        ),
+        child: _titleWidget(textAlign: TextAlign.center),
+      ),
       content: Text(
         content,
         textAlign: TextAlign.start,
