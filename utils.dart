@@ -24,8 +24,8 @@ _onCameraPersionRequest(
   });
 }
 
-_showWarningDialog(BuildContext context, String content, String btnText,
-    {String title}) {
+showWarningDialog(BuildContext context, String content, String btnText,
+    {String title, Function onCloseDialog}) {
   Widget alert;
 
   Widget _titleWidget({TextAlign textAlign = TextAlign.start}) => title != null
@@ -86,5 +86,9 @@ _showWarningDialog(BuildContext context, String content, String btnText,
     builder: (BuildContext context) {
       return alert;
     },
-  );
+  ).then((value) {
+    if (onCloseDialog != null) {
+      onCloseDialog();
+    }
+  });
 }
