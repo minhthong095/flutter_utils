@@ -35,59 +35,61 @@ showWarningDialog(BuildContext context, String content, String btnText,
         )
       : null;
 
-  if (Platform.isAndroid) {
-    // If it has plenty of buttons, it will stack them on vertical way.
-    // If title isn't supplied, height of this alert will smaller than the one has title.
-    alert = AlertDialog(
-      title: _titleWidget(),
-      content: Text(
-        content,
-        textAlign: TextAlign.start,
-      ),
-      actions: [
-        FlatButton(
-          child: Text(btnText),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+  if (content != null && content.isNotEmpty) {
+    if (Platform.isAndroid) {
+      // If it has plenty of buttons, it will stack them on vertical way.
+      // If title isn't supplied, height of this alert will smaller than the one has title.
+      alert = AlertDialog(
+        title: _titleWidget(),
+        content: Text(
+          content,
+          textAlign: TextAlign.start,
         ),
-      ],
-    );
-  } else {
-    // Almost similiar with Cupertino style.
-    // If title isn't supplied, height of this alert will smaller than the one has title.
-    alert = CupertinoAlertDialog(
-      title: Padding(
-        padding: EdgeInsets.only(
-          bottom: 10,
-        ),
-        child: _titleWidget(textAlign: TextAlign.center),
-      ),
-      content: Text(
-        content,
-        textAlign: TextAlign.start,
-      ),
-      actions: <Widget>[
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            btnText,
+        actions: [
+          FlatButton(
+            child: Text(btnText),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-        )
-      ],
-    );
-  }
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  ).then((value) {
-    if (onCloseDialog != null) {
-      onCloseDialog();
+        ],
+      );
+    } else {
+      // Almost similiar with Cupertino style.
+      // If title isn't supplied, height of this alert will smaller than the one has title.
+      alert = CupertinoAlertDialog(
+        title: Padding(
+          padding: EdgeInsets.only(
+            bottom: 10,
+          ),
+          child: _titleWidget(textAlign: TextAlign.center),
+        ),
+        content: Text(
+          content,
+          textAlign: TextAlign.start,
+        ),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              btnText,
+            ),
+          )
+        ],
+      );
     }
-  });
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    ).then((value) {
+      if (onCloseDialog != null) {
+        onCloseDialog();
+      }
+    });
+  }
 }
