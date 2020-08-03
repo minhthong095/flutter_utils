@@ -74,7 +74,6 @@ showWarningDialog(BuildContext context, String content, String btnText,
           },
           child: Text(
             btnText,
-            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         )
       ],
