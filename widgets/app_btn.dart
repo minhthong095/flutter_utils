@@ -1,6 +1,7 @@
-// Leading, trailing icon
-// Border color along side with press effect
-// Etc with already features of CupetinoButton
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:h_world/module/h_world.dart';
+
 class AppBtn extends StatelessWidget {
   final Function onPressed;
   final IconData leftIcon;
@@ -11,7 +12,7 @@ class AppBtn extends StatelessWidget {
   final Color borderColor;
   final Color textColor;
   final double width;
-
+  final EdgeInsets padding;
   final Color _disableColor = Color(0xff9f9f9f);
 
   AppBtn(this.title,
@@ -21,19 +22,21 @@ class AppBtn extends StatelessWidget {
       this.rightIcon,
       this.textColor = Colors.white,
       this.borderColor,
+      this.padding,
       this.color = AppColor.main,
       this.disableBgColor = const Color(0xff707070)});
 
   @override
   Widget build(BuildContext context) {
-    return _CupertinoButton(
-      color: color,
-      disabledColor: this.disableBgColor,
-      borderColor: borderColor,
-      borderDisableColor: this.disableBgColor,
-      onPressed: onPressed,
-      child: SizedBox(
-        width: this.width,
+    return SizedBox(
+      width: width,
+      child: _CupertinoButton(
+        color: color,
+        padding: this.padding,
+        disabledColor: this.disableBgColor,
+        borderColor: borderColor,
+        borderDisableColor: this.disableBgColor,
+        onPressed: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
