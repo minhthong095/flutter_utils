@@ -13,6 +13,7 @@ class AppBtn extends StatelessWidget {
   final Color textColor;
   final double width;
   final EdgeInsets padding;
+  final Color disableTextColor;
   final Color _disableColor = Color(0xff9f9f9f);
 
   AppBtn(this.title,
@@ -24,6 +25,7 @@ class AppBtn extends StatelessWidget {
       this.borderColor,
       this.padding,
       this.color = AppColor.main,
+      this.disableTextColor = const Color(0xff9f9f9f),
       this.disableBgColor = const Color(0xff707070)});
 
   @override
@@ -44,7 +46,7 @@ class AppBtn extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                  color: onPressed != null ? textColor : Color(0xff9f9f9f)),
+                  color: onPressed != null ? textColor : disableTextColor),
             ),
             _icon(rightIcon),
           ],
