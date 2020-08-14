@@ -1,3 +1,8 @@
+String _addressFormat(
+    String detail, Province province, District district, Ward ward) {
+  return '${(detail ?? '')}${(ward?.name == null ? '' : ' ${ward.name},')}${(district?.name == null ? '' : ' ${district.name},')}${(province?.name == null ? '' : ' ${province.name}')} ';
+}
+
 _onCameraPersionRequest(
     {Function onGranted,
     Function onAlreadyDenied,
