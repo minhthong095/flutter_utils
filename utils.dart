@@ -8,9 +8,12 @@ bool emailMatch(String email) {
       .hasMatch(email);
 }
 
-String _addressFormat(
-    String detail, String province, String district, String ward) {
-  return '${(detail ?? '')}${(ward == null ? '' : ' $ward,')}${(district == null ? '' : ' $district,')}${(province == null ? '' : ' $province')} ';
+_fullAddress(String address, String ward, String district, String province) {
+  final _adress = address ?? '';
+  final _ward = ward == null && ward.isEmpty ? '' : ' $ward,';
+  final _district = district == null && district.isEmpty ? '' : ' $district,';
+  final _province = province == null && province.isEmpty ? '' : ' $province,';
+  return '$_adress$_ward$_district$_province';
 }
 
 _onCameraPersionRequest(
