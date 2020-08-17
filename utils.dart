@@ -1,3 +1,13 @@
+bool phoneNumberMatch(String phone) {
+  return RegExp(r"^[0-9]{10}$").hasMatch(phone);
+}
+
+bool emailMatch(String email) {
+  return RegExp(
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+      .hasMatch(email);
+}
+
 String _addressFormat(
     String detail, String province, String district, String ward) {
   return '${(detail ?? '')}${(ward == null ? '' : ' $ward,')}${(district == null ? '' : ' $district,')}${(province == null ? '' : ' $province')} ';
