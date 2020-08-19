@@ -8,8 +8,8 @@ bool emailMatch(String email) {
       .hasMatch(email);
 }
 
-_fullAddress(String address, String ward, String district, String province) {
-  final _adress = address ?? '';
+fullAddress(String address, String ward, String district, String province) {
+  final _adress = address == null ? '' : '$address,';
   final _ward = ward == null || ward.isEmpty ? '' : ' $ward,';
   final _district = district == null || district.isEmpty ? '' : ' $district,';
   final _province = province == null || province.isEmpty ? '' : ' $province';
@@ -42,72 +42,82 @@ _onCameraPersionRequest(
   });
 }
 
-showWarningDialog(BuildContext context, String content, String btnText,
-    {String title, Function onCloseDialog}) {
-  Widget alert;
+class WarningDialog {
+  static bool _isShow = false;
 
-  Widget _titleWidget({TextAlign textAlign = TextAlign.start}) => title != null
-      ? Text(
-          title,
-          textAlign: textAlign,
-        )
-      : null;
+  static show(BuildContext context, String content, String btnText,
+      {String title, Function onCloseDialog}) {
+    if (!_isShow) {
+      _isShow = true;
+      Widget alert;
+      Widget _titleWidget({TextAlign textAlign = TextAlign.start}) =>
+          title != null
+              ? Text(
+                  title,
+                  textAlign: textAlign,
+                )
+              : null;
 
-  if (content != null && content.isNotEmpty) {
-    if (Platform.isAndroid) {
-      // If it has plenty of buttons, it will stack them on vertical way.
-      // If title isn't supplied, height of this alert will smaller than the one has title.
-      alert = AlertDialog(
-        title: _titleWidget(),
-        content: Text(
-          content,
-          textAlign: TextAlign.start,
-        ),
-        actions: [
-          FlatButton(
-            child: Text(btnText),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    } else {
-      // Almost similiar with Cupertino style.
-      // If title isn't supplied, height of this alert will smaller than the one has title.
-      alert = CupertinoAlertDialog(
-        title: Padding(
-          padding: EdgeInsets.only(
-            bottom: 10,
-          ),
-          child: _titleWidget(textAlign: TextAlign.center),
-        ),
-        content: Text(
-          content,
-          textAlign: TextAlign.start,
-        ),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              btnText,
+      if (content != null && content.isNotEmpty) {
+        if (Platform.isAndroid) {
+          // If it has plenty of buttons, it will stack them on vertical way.
+          // If title isn't supplied, height of this alert will smaller than the one has title.
+          alert = AlertDialog(
+            title: _titleWidget(),
+            content: Text(
+              content,
+              textAlign: TextAlign.start,
             ),
-          )
-        ],
-      );
-    }
+            actions: [
+              FlatButton(
+                child: Text(btnText),
+                onPressed: () {
+                  _isShow = false;
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        } else {
+          // Almost similiar with Cupertino style.
+          // If title isn't supplied, height of this alert will smaller than the one has title.
+          alert = CupertinoAlertDialog(
+            title: Padding(
+              padding: EdgeInsets.only(
+                bottom: 10,
+              ),
+              child: _titleWidget(textAlign: TextAlign.center),
+            ),
+            content: Text(
+              content,
+              textAlign: TextAlign.start,
+            ),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                onPressed: () {
+                  _isShow = false;
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  btnText,
+                ),
+              )
+            ],
+          );
+        }
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    ).then((value) {
-      if (onCloseDialog != null) {
-        onCloseDialog();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        ).then((value) {
+          _isShow = false;
+          if (onCloseDialog != null) {
+            onCloseDialog();
+          }
+        });
       }
-    });
+    }
   }
 }
