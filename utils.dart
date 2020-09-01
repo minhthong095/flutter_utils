@@ -22,7 +22,6 @@ _onCameraPersionRequest(
     Function onJustDeny,
     Function onAndroidPermanentDenied}) {
   Permission.camera.status.then((value) {
-    print('status: ' + value.toString());
     if (value.isUndetermined) {
       Permission.camera.request().then((value) {
         if (value.isDenied && onJustDeny != null) {
