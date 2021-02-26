@@ -16,6 +16,7 @@ fullAddress(String address, String ward, String district, String province) {
   return '$_adress$_ward$_district$_province';
 }
 
+// Do not change this code into custom permission to request, it isn't stable
 _onCameraPersionRequest(
     {Function onGranted,
     Function onAlreadyDenied,
